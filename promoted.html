@@ -1,0 +1,19 @@
+{% set intro = g.site_intro_text %}
+
+<div class="module-content box">
+  <header>
+      {{ h.render_markdown(intro) }}
+  </header>
+
+  {% block home_image %}
+    <section class="featured media-overlay hidden-phone">
+      <h2 class="media-heading">{% block home_image_caption %}{{ _("San Diego Downtown Crime Map") }}{% endblock %}</h2>
+      {% block home_image_content %}
+        <a class="media-image" href="/dataset/clarinova_com-crime-incidents-casnd-7ba4-extract">
+          <img src="http://assets.sandiegodata.org.s3.amazonaws.com/images/Downtown-Balboa-Crime.png" alt="DowntownAndBalboaCrime" width="420" height="220" />
+        </a>
+      {% endblock %}
+    </section>
+  {% endblock %}
+</div>
+
