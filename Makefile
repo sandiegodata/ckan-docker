@@ -6,24 +6,26 @@ NS = sandiegodata
 VERSION = latest
 
 REPO = ckan
-NAME = ckan
+NAME = ckan-sdrdl
 
 DOCKER ?= docker
 
 
 PORTS =  -p 80  # -p 22
 
-SITE_URL=data.sandiegodata.org
-ADMIN_USER_KEY=admin
-ADMIN_USER_PASS=adminpw
-ADMIN_USER_EMAIL=bob@example.com
-VIRTUAL_HOST=$(SITE_URL)
+#SITE_URL=data.sandiegodata.org
+#ADMIN_USER_KEY=admin
+#ADMIN_USER_PASS=adminpw
+#ADMIN_USER_EMAIL=bob@example.com
+#VIRTUAL_HOST=$(SITE_URL)
+
+include Makefile.local
+
 
 #VOLUMES= -v host:container
 ENV = -e SITE_URL=$(SITE_URL) -eADMIN_USER_KEY=$(ADMIN_USER_KEY) -eADMIN_USER_PASS=$(ADMIN_USER_PASS) \
 -eADMIN_USER_EMAIL=$(ADMIN_USER_EMAIL) -eVIRTUAL_HOST=$(ADMIN_USER_EMAIL) # -eSSH=sshpass
 
-include Makefile.local
 
 .PHONY: build push shell run start stop restart reload rm rmf release backup
 
