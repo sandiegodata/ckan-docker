@@ -24,8 +24,10 @@ include Makefile.local
 
 #VOLUMES= -v host:container
 ENV = -e SITE_URL=$(SITE_URL) -eADMIN_USER_KEY=$(ADMIN_USER_KEY) -eADMIN_USER_PASS=$(ADMIN_USER_PASS) \
--eADMIN_USER_EMAIL=$(ADMIN_USER_EMAIL) -eVIRTUAL_HOST=$(ADMIN_USER_EMAIL) # -eSSH=sshpass
+-eADMIN_USER_EMAIL=$(ADMIN_USER_EMAIL) -eVIRTUAL_HOST=$(VIRTUAL_HOST) # -eSSH=sshpass
 
+
+NETWORK=--network webproxy
 
 .PHONY: build push shell run start stop restart reload rm rmf release backup
 
@@ -42,13 +44,13 @@ attach:
 	$(DOCKER) exec  -ti $(NAME) /bin/bash
 
 run:
-	$(DOCKER) run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION)
+	$(DOCKER) run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(NETWORK) $(ENV) $(NS)/$(REPO):$(VERSION)
 
 logs:
 	$(DOCKER) logs -f $(NAME) 
 
 start:
-	$(DOCKER) run -d --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION)
+	$(DOCKER) run -d --name $(NAME) $(PORTS) $(VOLUMES) $(NETWORK) $(ENV) $(NS)/$(REPO):$(VERSION)
 
 stop:
 	$(DOCKER) stop $(NAME)
